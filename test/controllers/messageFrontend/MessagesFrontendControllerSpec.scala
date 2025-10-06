@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.messageFrontend
 
 import com.codahale.metrics.SharedMetricRegistries
-import controllers.RendererHandler.MarkAsRead
+import controllers.messageFrontend.RendererHandler.MarkAsRead
+import controllers.messageFrontend.{ MessageFrontEndController, RendererHandler }
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite

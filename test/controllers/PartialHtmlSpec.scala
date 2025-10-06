@@ -40,7 +40,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.Request
 import play.api.test.FakeRequest
 import uk.gov.hmrc.auth.core.{ Enrolment, EnrolmentIdentifier, Enrolments }
-import uk.gov.hmrc.crypto.ApplicationCrypto
+import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.ApplicationCrypto
 import uk.gov.hmrc.http.HeaderCarrier
 import views.helpers.PortalUrlBuilder
 
@@ -96,7 +96,7 @@ class PartialHtmlSpec
 
   trait TestListPartialHtml extends PartialHtml {
 
-    lazy val applicationCrypto = new ApplicationCrypto(ConfigFactory.load())
+    lazy val applicationCrypto = app.injector.instanceOf[ApplicationCrypto]
     val encryptAndEncode = new EncryptAndEncode(applicationCrypto) {
       override lazy val encoder: Encoder = new Encoder {
         override def encryptAndEncode(value: String) = s"encoded(encrypted($value))"

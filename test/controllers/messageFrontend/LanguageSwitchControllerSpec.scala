@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package controllers
-import org.scalatest.matchers.must.Matchers
-import org.scalatest.OptionValues
-import play.api.test.Helpers._
-import org.scalatest.concurrent.ScalaFutures
-import play.api.test.FakeRequest
+package controllers.messageFrontend
+
 import base.SpecBase
+import org.scalatest.OptionValues
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.matchers.must.Matchers
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 
 class LanguageSwitchControllerSpec extends SpecBase with Matchers with OptionValues with ScalaFutures {
 

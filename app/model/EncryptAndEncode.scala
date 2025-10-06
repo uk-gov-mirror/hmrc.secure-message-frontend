@@ -16,7 +16,8 @@
 
 package model
 
-import uk.gov.hmrc.crypto.{ ApplicationCrypto, PlainText }
+import uk.gov.hmrc.crypto.PlainText
+import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.ApplicationCrypto
 
 import java.util.Base64
 import javax.inject.Inject

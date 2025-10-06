@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.messageFrontend
 
 import com.google.inject.Inject
-import javax.inject.Singleton
-import play.api.i18n.Lang
-import play.api.mvc._
 import config.AppConfig
 import models.Language
+import play.api.i18n.Lang
+import play.api.mvc.*
 import uk.gov.hmrc.play.language.{ LanguageController, LanguageUtils }
+
+import javax.inject.Singleton
 
 @Singleton
 class LanguageSwitchController @Inject() (appConfig: AppConfig, languageUtils: LanguageUtils, cc: ControllerComponents)
     extends LanguageController(languageUtils, cc) {
-  import appConfig._
+  import appConfig.*
 
   override def fallbackURL: String =
     "https://www.gov.uk/government/organisations/hm-revenue-customs"

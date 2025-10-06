@@ -59,8 +59,6 @@ lazy val microservice = Project(appName, file("."))
     ),
     PlayKeys.playDefaultPort := 9055,
     retrieveManaged := true,
-    update / evictionWarningOptions :=
-      EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
     routesGenerator := InjectedRoutesGenerator
   )
   .settings(
@@ -82,6 +80,12 @@ lazy val microservice = Project(appName, file("."))
 lazy val it = (project in file("it"))
   .enablePlugins(PlayScala)
   .dependsOn(`microservice` % "test->test")
+  .settings(
+    scalacOptions ++= Seq(
+      // Silence "Flag -XXX set repeatedly"
+      "-Wconf:msg=Flag.*repeatedly:s"
+    )
+  )
 
 Test / test := (Test / test)
   .dependsOn(scalafmtCheckAll)

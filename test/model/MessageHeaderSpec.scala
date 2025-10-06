@@ -19,7 +19,8 @@ package model
 import com.codahale.metrics.SharedMetricRegistries
 import com.typesafe.config.ConfigFactory
 import org.scalatestplus.play.PlaySpec
-import uk.gov.hmrc.crypto.ApplicationCrypto
+import play.api.Configuration
+import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.ApplicationCrypto
 
 class MessageHeaderSpec extends PlaySpec {
 
@@ -42,7 +43,7 @@ class MessageHeaderSpec extends PlaySpec {
   }
 
   trait TestCase {
-    lazy val applicationCrypto = new ApplicationCrypto(ConfigFactory.load())
+    lazy val applicationCrypto = new ApplicationCrypto(Configuration(ConfigFactory.load()))
     val encryptAndEncode = new EncryptAndEncode(applicationCrypto) {
       override lazy val encoder: Encoder = (value: String) => s"encoded(encrypted($value))"
     }

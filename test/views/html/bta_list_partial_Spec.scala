@@ -24,7 +24,7 @@ import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.{ Lang, Messages }
 import play.twirl.api.Html
-import uk.gov.hmrc.crypto.ApplicationCrypto
+import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.ApplicationCrypto
 
 import java.time.{ Instant, LocalDate }
 
@@ -32,7 +32,7 @@ class bta_list_partial_Spec extends PlaySpec with GuiceOneAppPerSuite with Mocki
 
   implicit val messages: Messages = messagesInEnglish()
   implicit val lang: Lang = langEn
-  lazy val applicationCrypto = new ApplicationCrypto(ConfigFactory.load())
+  lazy val applicationCrypto = app.injector.instanceOf[ApplicationCrypto]
   val encryptAndEncode = new EncryptAndEncode(applicationCrypto) {
     override lazy val encoder: Encoder = new Encoder {
       override def encryptAndEncode(value: String) = s"encoded(encrypted($value))"

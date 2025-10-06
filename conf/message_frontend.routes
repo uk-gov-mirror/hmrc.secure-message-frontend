@@ -1,13 +1,10 @@
-GET   /messages                     controllers.MessageFrontEndController.list(taxIdentifiers: List[String], regimes: List[String])
-GET   /messages/bta                 controllers.MessageFrontEndController.btaList(taxIdentifiers: List[String], regimes: List[String])
-GET   /messages/count               controllers.MessageFrontEndController.count(read: Option[model.ReadPreference.Value], taxIdentifiers: List[String], regimes: List[String])
-GET   /messages/inbox-link          controllers.MessageFrontEndController.inboxLink(messagesInboxUrl: RedirectUrl, taxIdentifiers: List[String], regimes: List[String])
-GET   /messages/:encryptedUrl       controllers.MessageFrontEndController.read(encryptedUrl: controllers.Encrypted[controllers.ParameterisedUrl])
+GET   /messages                     controllers.messageFrontend.MessageFrontEndController.list(taxIdentifiers: List[String], regimes: List[String])
+GET   /messages/bta                 controllers.messageFrontend.MessageFrontEndController.btaList(taxIdentifiers: List[String], regimes: List[String])
+GET   /messages/count               controllers.messageFrontend.MessageFrontEndController.count(read: Option[model.ReadPreference.Value], taxIdentifiers: List[String], regimes: List[String])
+GET   /messages/inbox-link          controllers.messageFrontend.MessageFrontEndController.inboxLink(messagesInboxUrl: RedirectUrl, taxIdentifiers: List[String], regimes: List[String])
+GET   /messages/:encryptedUrl       controllers.messageFrontend.MessageFrontEndController.read(encryptedUrl: controllers.Encrypted[controllers.ParameterisedUrl])
 
 
 
 ### NoDocs ###
-GET         /language/:lang     controllers.LanguageSwitchController.selectLanguage(lang: Language)
-
-### NoDocs ###
-GET         /assets/*file       controllers.Assets.versioned(path = "/public", file: Asset)
+GET         /language/:lang     controllers.messageFrontend.LanguageSwitchController.selectLanguage(lang: Language)

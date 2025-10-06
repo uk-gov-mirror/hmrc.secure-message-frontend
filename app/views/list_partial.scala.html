@@ -211,12 +211,6 @@
                             } else {
                                     <span class="underline black-text govuk-body">{messageRead}</span>
                             }
-                            val subject = if(message.sentInError) {
-                                subjectWithCounter ++ <span class="dash-padding govuk-body">-</span>
-                                    <span class="sent-in-error non-breaking govuk-body">{messages("withdrawn")}</span>
-                            } else {
-                                subjectWithCounter
-                            }
                             val messageLang = message.lang
                             <a href={messageUrl(message)} class="no--underline message-subject govuk-link" data-sso="false" lang={messageLang}>
                                 {subjectWithCounter}

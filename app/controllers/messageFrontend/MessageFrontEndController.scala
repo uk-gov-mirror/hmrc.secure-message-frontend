@@ -14,29 +14,30 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.messageFrontend
 
 import config.AppConfig
 import connectors.{ RendererConnector, SecureMessageConnector }
+import controllers.{ Encrypted, ParameterisedUrl, PartialHtml }
 import model.*
 import model.RenderMessageMetadata.{ ReadMessageMetadata, UnreadMessageMetadata }
-import play.api.{ Configuration, Environment, Logger }
+import org.jsoup.Jsoup
 import play.api.i18n.I18nSupport
 import play.api.libs.json.Json
 import play.api.mvc.*
-import play.api.mvc.{ Action, AnyContent, MessagesControllerComponents, MessagesRequest, Result, Results }
+import play.api.{ Configuration, Environment, Logger }
+import play.utils.UriEncoding
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.auth.core.{ AuthConnector, AuthorisedFunctions, MissingBearerToken, SessionRecordNotFound }
+import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.play.bootstrap.binders.RedirectUrl.idFunctor
+import uk.gov.hmrc.play.bootstrap.binders.{ OnlyRelative, RedirectUrl }
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.helpers.PortalUrlBuilder
-import org.jsoup.Jsoup
-import play.utils.UriEncoding
-import uk.gov.hmrc.play.bootstrap.binders.{ OnlyRelative, RedirectUrl }
-import uk.gov.hmrc.play.bootstrap.binders.RedirectUrl.idFunctor
 import uk.gov.hmrc.play.partials.HtmlPartial
+import views.helpers.PortalUrlBuilder
 
 import java.net.URL
 import javax.inject.Inject
@@ -58,7 +59,7 @@ class MessageFrontEndController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FrontendController(cc) with AuthorisedFunctions with I18nSupport with PartialHtml {
 
-  import RendererHandler._
+  import RendererHandler.*
 
   private val logger = Logger(getClass)
 
