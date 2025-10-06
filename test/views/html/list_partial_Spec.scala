@@ -28,7 +28,7 @@ import play.api.i18n.Messages
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
-import uk.gov.hmrc.crypto.ApplicationCrypto
+import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.ApplicationCrypto
 import views.helpers.PortalUrlBuilder
 
 import java.time.{ Instant, LocalDate }
@@ -39,7 +39,7 @@ class list_partial_Spec @Inject (configuration: Configuration)
 
   implicit val messages: Messages = messagesInEnglish()
   implicit val request: FakeRequest[AnyContentAsEmpty.type] = engRequest
-  lazy val applicationCrypto = new ApplicationCrypto(ConfigFactory.load())
+  lazy val applicationCrypto = app.injector.instanceOf[ApplicationCrypto]
   val encryptAndEncode = new EncryptAndEncode(applicationCrypto) {
     override lazy val encoder: Encoder = new Encoder {
       override def encryptAndEncode(value: String) = s"encoded(encrypted($value))"

@@ -19,7 +19,7 @@ package views.helpers
 import cats.implicits.catsSyntaxEq
 import com.ibm.icu.text.{ DateFormatSymbols, SimpleDateFormat }
 import com.ibm.icu.util.{ TimeZone, ULocale }
-import controllers.routes.LanguageSwitchController
+import controllers.messageFrontend.routes.LanguageSwitchController
 import model.MessageListItem
 import models.{ Language, MessageHeader, MessageType }
 

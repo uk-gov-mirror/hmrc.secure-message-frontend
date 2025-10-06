@@ -207,7 +207,7 @@ a.underline-fix { text-decoration: none; }
 
  <td class="govuk-table__cell mob-align-right">
 
-    <span class='@{if(conversationHeader.unreadMessages){"govuk-!-font-weight-bold"}}'>@{getMessageDate(conversationHeader)}</span>
+    <span class='@{ if (conversationHeader.unreadMessages) { "govuk-!-font-weight-bold" } else { "" } }'>@{getMessageDate(conversationHeader)}</span>
 
 
  </td>

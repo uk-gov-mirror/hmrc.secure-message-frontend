@@ -46,7 +46,11 @@ trait ServiceSpec
   def externalServices: Seq[String]
 
   def additionalConfig: Map[String, _ <: Any] =
-    Map.empty
+    Map(
+      "metrics.enabled"  -> false,
+      "metrics.enabled"  -> false,
+      "auditing.enabled" -> false
+    )
 
   def additionalOverrides: Seq[GuiceableModule] =
     Seq.empty
