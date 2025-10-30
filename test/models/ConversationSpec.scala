@@ -29,6 +29,34 @@ import java.util.Date
 
 class ConversationSpec extends PlaySpec {
 
+  "Conversation.conversationFormat" should {
+    import Conversation.conversationFormat
+
+    "read the json correctly" in new Setup {
+      Json.parse(conversationJsonString).as[Conversation] mustBe conversationObject
+    }
+
+    "throw exception for incorrect json" in new Setup {
+      intercept[JsResultException] {
+        Json.parse(conversationJsonIncorrect).as[Conversation]
+      }
+    }
+  }
+
+  "Message.messageReads" should {
+    import Message.messageReads
+
+    "read the json correctly" in new Setup {
+      Json.parse(messageJson).as[Message] mustBe message
+    }
+
+    "throw exception for incorrect json" in new Setup {
+      intercept[JsResultException] {
+        Json.parse(messageJsonIncorrect).as[Message]
+      }
+    }
+  }
+
   "SenderInformation.dateFormat" should {
     import SenderInformation.dateFormat
     "read the json correctly" in new Setup {
@@ -87,34 +115,6 @@ class ConversationSpec extends PlaySpec {
     "throw exception for incorrect json" in new Setup {
       intercept[JsResultException] {
         Json.parse(firstReaderInformationJsonIncorrect).as[FirstReaderInformation]
-      }
-    }
-  }
-
-  "Message.messageReads" should {
-    import Message.messageReads
-
-    "read the json correctly" in new Setup {
-      Json.parse(messageJson).as[Message] mustBe message
-    }
-
-    "throw exception for incorrect json" in new Setup {
-      intercept[JsResultException] {
-        Json.parse(messageJsonIncorrect).as[Message]
-      }
-    }
-  }
-
-  "Conversation.conversationFormat" should {
-    import Conversation.conversationFormat
-
-    "read the json correctly" in new Setup {
-      Json.parse(conversationJsonString).as[Conversation] mustBe conversationObject
-    }
-
-    "throw exception for incorrect json" in new Setup {
-      intercept[JsResultException] {
-        Json.parse(conversationJsonIncorrect).as[Conversation]
       }
     }
   }
