@@ -59,6 +59,7 @@ class ConversationSpec extends PlaySpec {
 
   "SenderInformation.dateFormat" should {
     import SenderInformation.dateFormat
+    
     "read the json correctly" in new Setup {
       Json.parse(timeInstantString1).as[Instant] mustBe timeInstant1
     }
@@ -90,6 +91,7 @@ class ConversationSpec extends PlaySpec {
 
   "FirstReaderInformation.dateFormat" should {
     import FirstReaderInformation.dateFormat
+    
     "read the json correctly" in new Setup {
       Json.parse(timeInstantString1).as[Instant] mustBe timeInstant1
     }
