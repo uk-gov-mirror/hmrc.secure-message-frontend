@@ -36,9 +36,9 @@ class ConversationSpec extends PlaySpec {
       Json.parse(conversationJsonString).as[Conversation] mustBe conversationObject
     }
 
-    "throw exception for incorrect json" in new Setup {
+    "throw exception for invalid json" in new Setup {
       intercept[JsResultException] {
-        Json.parse(conversationJsonIncorrect).as[Conversation]
+        Json.parse(conversationJsonInvalid).as[Conversation]
       }
     }
   }
@@ -50,21 +50,21 @@ class ConversationSpec extends PlaySpec {
       Json.parse(messageJson).as[Message] mustBe message
     }
 
-    "throw exception for incorrect json" in new Setup {
+    "throw exception for invalid json" in new Setup {
       intercept[JsResultException] {
-        Json.parse(messageJsonIncorrect).as[Message]
+        Json.parse(messageJsonInvalid).as[Message]
       }
     }
   }
 
   "SenderInformation.dateFormat" should {
     import SenderInformation.dateFormat
-    
+
     "read the json correctly" in new Setup {
       Json.parse(timeInstantString1).as[Instant] mustBe timeInstant1
     }
 
-    "throw exception for incorrect json" in new Setup {
+    "throw exception for invalid json" in new Setup {
       intercept[JsonParseException] {
         Json.parse(timeInstantString).as[Instant]
       }
@@ -82,21 +82,21 @@ class ConversationSpec extends PlaySpec {
       Json.parse(senderInformationJson).as[SenderInformation] mustBe senderInformation
     }
 
-    "throw exception for incorrect json" in new Setup {
+    "throw exception for invalid json" in new Setup {
       intercept[JsResultException] {
-        Json.parse(senderInformationJsonIncorrect).as[SenderInformation]
+        Json.parse(senderInformationJsonInvalid).as[SenderInformation]
       }
     }
   }
 
   "FirstReaderInformation.dateFormat" should {
     import FirstReaderInformation.dateFormat
-    
+
     "read the json correctly" in new Setup {
       Json.parse(timeInstantString1).as[Instant] mustBe timeInstant1
     }
 
-    "throw exception for incorrect json" in new Setup {
+    "throw exception for invalid json" in new Setup {
       intercept[JsonParseException] {
         Json.parse(timeInstantString).as[Instant]
       }
@@ -114,9 +114,9 @@ class ConversationSpec extends PlaySpec {
       Json.parse(firstReaderInformationJson).as[FirstReaderInformation] mustBe firstReaderInformation
     }
 
-    "throw exception for incorrect json" in new Setup {
+    "throw exception for invalid json" in new Setup {
       intercept[JsResultException] {
-        Json.parse(firstReaderInformationJsonIncorrect).as[FirstReaderInformation]
+        Json.parse(firstReaderInformationJsonInvalid).as[FirstReaderInformation]
       }
     }
   }
@@ -134,7 +134,7 @@ class ConversationSpec extends PlaySpec {
         |"self":true
         |}""".stripMargin
 
-    val senderInformationJsonIncorrect: String =
+    val senderInformationJsonInvalid: String =
       """{
         |"name":"test_name",
         |"self":false
@@ -149,7 +149,7 @@ class ConversationSpec extends PlaySpec {
         |"read":20251012233000000
         |}""".stripMargin
 
-    val firstReaderInformationJsonIncorrect: String =
+    val firstReaderInformationJsonInvalid: String =
       """{
         |"name":"test_name"
         |}""".stripMargin
@@ -161,7 +161,7 @@ class ConversationSpec extends PlaySpec {
                                 |"senderInformation":{"name":"test_name","sent":20251012233000000,"self":true},
                                 |"content":"test_content"}""".stripMargin
 
-    val messageJsonIncorrect: String =
+    val messageJsonInvalid: String =
       """{
         |"content":"test_content"}""".stripMargin
 
@@ -177,12 +177,12 @@ class ConversationSpec extends PlaySpec {
          |"messages":[$messageJson]
          |}""".stripMargin
 
-    val conversationJsonIncorrect: String = s"""{
-                                               |"client":"test_client",
-                                               |"conversationId":"test_id",
-                                               |"status":"test_status",
-                                               |"messages":[$messageJson]
-                                               |}""".stripMargin
+    val conversationJsonInvalid: String = s"""{
+                                             |"client":"test_client",
+                                             |"conversationId":"test_id",
+                                             |"status":"test_status",
+                                             |"messages":[$messageJson]
+                                             |}""".stripMargin
 
     val conversationObject: Conversation = Conversation(
       client = "test_client",
