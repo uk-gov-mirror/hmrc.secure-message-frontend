@@ -17,18 +17,38 @@
 package models
 
 import org.scalatestplus.play.PlaySpec
-import play.api.libs.json.Json
+import play.api.libs.json.{ JsResultException, Json }
 
 class CountSpec extends PlaySpec {
 
-  "A count result as JSON" must {
-    "have its content serialised as expected" in {
-      val totalMessagesCount: Long = 5
-      val unreadMessagesCount: Long = 2
+  "Json Reads" should {
+    import Count.countFormat
 
-      val countResult = Count(total = totalMessagesCount, unread = unreadMessagesCount)
-      Json.toJson(countResult) mustEqual Json.parse("""{"total":5,"unread":2}""")
+    "read the json correctly" in new Setup {
+      Json.parse(countJsonString).as[Count] mustBe count
     }
+
+    "throw exception for invalid json" in new Setup {
+      intercept[JsResultException] {
+        Json.parse(countJsonStringInvalid).as[Count]
+      }
+    }
+  }
+
+  "Json Writes" should {
+    "write the object correctly" in new Setup {
+      Json.toJson(count) mustBe Json.parse(countJsonString)
+    }
+  }
+
+  trait Setup {
+    val totalMessagesCount: Long = 5
+    val unreadMessagesCount: Long = 2
+
+    val count: Count = Count(total = totalMessagesCount, unread = unreadMessagesCount)
+
+    val countJsonString: String = """{"total":5,"unread":2}""".stripMargin
+    val countJsonStringInvalid = """{"total":5}"""
   }
 
 }
