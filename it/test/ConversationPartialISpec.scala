@@ -26,10 +26,12 @@ import views.helpers.HtmlUtil.encodeBase64String
 import play.api.libs.ws.JsonBodyWritables.writeableOf_JsValue
 
 class ConversationPartialISpec extends PlaySpec with ServiceSpec with MockitoSugar with BeforeAndAfterEach {
-  override def externalServices: Seq[String] = Seq.empty
+
   val secureMessagePort: Int = 9051
   val overCharacterLimit: Int = 4001
   val id = "909d1359aa0220d12c73160a"
+
+  override def externalServices: Seq[String] = Seq.empty
   override protected def beforeEach(): Unit = {
     wsClient
       .url(s"http://localhost:$secureMessagePort/test-only/delete/conversation/$id")

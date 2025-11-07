@@ -20,44 +20,48 @@
  */
 import org.scalatest.concurrent.IntegrationPatience
 import org.scalatest.{ BeforeAndAfterEach, Inspectors }
-import play.api.Logger
+import play.api.Logging
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{ route, * }
 import uk.gov.hmrc.auth.core.MissingBearerToken
 import uk.gov.hmrc.domain.SaUtr
 import uk.gov.hmrc.http.SessionKeys
+import play.api.http.{ ContentTypes, HeaderNames }
+import play.api.mvc.{ AnyContentAsEmpty, Result }
+import test.utils.AuthorityBuilder
 
+import scala.concurrent.Future
 import scala.concurrent.duration.*
 import scala.language.postfixOps
 
 class MessagesPartialsISpec
-    extends MessageFrontendISpec with IntegrationPatience with Inspectors with BeforeAndAfterEach {
+    extends MessageFrontendISpec with IntegrationPatience with Inspectors with BeforeAndAfterEach with Logging {
 
-  val logger = Logger(getClass)
   implicit override val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = scaled(30 seconds), interval = scaled(200 millis))
 
-  override protected def beforeEach() = {
-    ws.url(s"${messageResource}test-only/messages").delete()
-    ws.url(s"${messageResource}test-only/qmessages").delete()
-  }
+  override protected def beforeEach(): Unit =
+    ws.url(s"${secureMessageResource}test-only/delete/secure-messages")
+      .withHttpHeaders((HeaderNames.CONTENT_TYPE, ContentTypes.JSON))
+      .delete()
+      .futureValue
 
   "Message link" must {
     "successfully view message when step and returnUrl are missing" in new TestCase {
 
-      val utr = SaUtr("1555369043")
+      val utr: SaUtr = SaUtr("1555369043")
 
-      val authProvider = testAuthorisationProvider.governmentGatewayAuthority().withSaUtr(utr)
+      val authProvider: AuthorityBuilder = testAuthorisationProvider.governmentGatewayAuthority().withSaUtr(utr)
 
-      val bt = authProvider.bearerTokenHeader()
+      val bt: (String, String) = authProvider.bearerTokenHeader()
 
-      val messageId = messagesPost(statementMessage)
-      val request =
+      val messageId: String = messagesPost(statementMessage)
+      val request: FakeRequest[AnyContentAsEmpty.type] =
         getMessageForEncryptedUrl(encryptSaMessageRendererReadUrl(messageId))
           .withSession(SessionKeys.authToken -> bt._2)
 
-      val result = route(app, request).get
+      val result: Future[Result] = route(app, request).get
       status(result) must be(Status.OK)
 
     }

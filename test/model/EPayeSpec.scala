@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package controllers.generic.models
+package model
 
 import org.scalatestplus.play.PlaySpec
 
-class MessageFiltersSpec extends PlaySpec {
+class EPayeSpec extends PlaySpec {
 
-  "CustomerEnrolment request model" should {
-    "parse a URL parameter for enrolment into its 3 part constituents" in {
-      CustomerEnrolment.parse("HMRC-CUS-ORG~EoriNumber~GB1234567") mustEqual CustomerEnrolment(
-        "HMRC-CUS-ORG",
-        "EoriNumber",
-        "GB1234567"
-      )
-    }
-  }
+  "name" should {
+    "return the correct value" in {
+      val epaye: EPaye = EPaye("test_vlaue")
 
-  "Tag request model" should {
-    "parse a URL parameter for tag into its 2 part constituents" in {
-      Tag.parse("notificationType~somevalue") mustEqual Tag("notificationType", "somevalue")
+      epaye.value mustBe "test_vlaue"
+      epaye.name mustBe "EMPREF"
+      epaye.toString mustBe "test_vlaue"
     }
   }
 }

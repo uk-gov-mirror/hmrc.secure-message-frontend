@@ -148,7 +148,6 @@ class MessagesISpec extends MessageFrontendISpec with Inspectors {
 
       status(result) must be(Status.OK)
       expectedMessages(contentAsString(result), 1)
-
     }
 
     "return no messages for ct-utr user" in new TestCase {
@@ -321,9 +320,6 @@ class MessagesISpec extends MessageFrontendISpec with Inspectors {
         .governmentGatewayAuthority()
         .withNino(Nino("NH123456D"))
         .withPodsPp(HmrcPodsPpOrg("A12345678"))
-
-      externalMessagesPost(podsMessage("HMRC-PODS-ORG.PSAID", "A1234567"))
-      externalMessagesPost(podsMessage("HMRC-PODSPP-ORG.PSPID", "A12345678"))
 
       val request = messagesBta(List("PSPID"), List("pods"))
         .withSession(

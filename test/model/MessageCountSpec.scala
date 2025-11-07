@@ -14,39 +14,34 @@
  * limitations under the License.
  */
 
-package models
+package model
 
 import org.scalatestplus.play.PlaySpec
-import play.api.libs.json.{ JsResultException, Json }
-import helpers.TestData.{ FIVE, TWO }
+import play.api.libs.json.{ JsResult, JsResultException, Json }
+import helpers.TestData.FIVE
 
-class CountSpec extends PlaySpec {
+class MessageCountSpec extends PlaySpec {
 
   "Json Reads" should {
-    import Count.countFormat
-
     "read the json correctly" in new Setup {
-      Json.parse(countJsonString).as[Count] mustBe count
+      Json.parse(messageCountJsonString).as[MessageCount] mustBe messageCount
     }
 
     "throw exception for invalid json" in new Setup {
       intercept[JsResultException] {
-        Json.parse(countJsonStringInvalid).as[Count]
+        Json.parse("""{}""").as[MessageCount]
       }
     }
   }
 
   "Json Writes" should {
     "write the object correctly" in new Setup {
-      Json.toJson(count) mustBe Json.parse(countJsonString)
+      Json.toJson(messageCount) mustBe Json.parse(messageCountJsonString)
     }
   }
 
   trait Setup {
-    val count: Count = Count(total = FIVE, unread = TWO)
-
-    val countJsonString: String = """{"total":5,"unread":2}""".stripMargin
-    val countJsonStringInvalid = """{"total":5}"""
+    val messageCount: MessageCount = MessageCount(FIVE)
+    val messageCountJsonString: String = """{"count":5}""".stripMargin
   }
-
 }
